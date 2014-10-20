@@ -181,4 +181,15 @@ return 100;
 }
 add_filter('excerpt_length', 'new_excerpt_length');
 
-
+/////////////////////////////////////////////////////////////////////////
+/**
+ * Criando um site restrito, redireciona a pessoa caso nao esteja logada.
+ */
+add_action('init','to_login');
+function to_login() {
+    $isLoginPage = strpos($_SERVER['REQUEST_URI'], "wp-login.php") !== false;   
+    if(!is_user_logged_in() && !is_admin() &&  !$isLoginPage) {
+        header( 'Location: http://seusite.com/wp-admin' ) ;
+        die();
+    }
+}
