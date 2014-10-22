@@ -1,5 +1,28 @@
 <?php 
 
+/**
+ * Funcao abaixo, exclui do the_category(); as categorias definidas no array $exclude;
+ */
+function the_category_filter($thelist,$separator=' ') {  
+    if(!defined('WP_ADMIN')) {  
+        //Nome das categorias que deseja excluir do the_category();  
+        $exclude = array('exemplo', 'Exemplo');  
+          
+        $cats = explode($separator,$thelist);  
+        $newlist = array();  
+        foreach($cats as $cat) {  
+            $catname = trim(strip_tags($cat));  
+            if(!in_array($catname,$exclude))  
+                $newlist[] = $cat;  
+        }  
+        return implode($separator,$newlist);  
+    } else {  
+        return $thelist;  
+    }  
+}  
+add_filter('the_category','the_category_filter', 10, 2); 
+
+
 //////////////////////////////////////////////////////////////////////////
 ///              Função mostra no rodapé qual pagina vc está          ///
 ////////////////////////////////////////////////////////////////////////  
