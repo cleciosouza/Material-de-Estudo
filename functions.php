@@ -1,6 +1,22 @@
 <?php 
 
 /**
+* Habilita SEARCH buscar somente o post_type desejado.
+*/
+
+function SearchFilter($query) {
+	if ($query->is_search) {
+		$query->set('post_type', array('name_post_type') );
+	}
+	return $query;
+}
+add_filter('pre_get_posts','SearchFilter');
+
+
+
+
+
+/**
  * Funcao abaixo, exclui do the_category(); as categorias definidas no array $exclude;
  */
 function the_category_filter($thelist,$separator=' ') {  
